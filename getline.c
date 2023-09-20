@@ -157,9 +157,9 @@ int _getline(info_t *info, char **ptr, size_t *length)
 	if (!latest_p)
 		return (p ? free(p), -1 : -1);
 	if (s)
-		str_concat(latest_p, buf + id, k - id);
+		_str_concat(latest_p, buf + id, k - id);
 	else
-		str_copy(latest_p, buf + id, k - id + 1);
+		_str_copy(latest_p, buf + id, k - id + 1);
 
 	s += k - id;
 	id = k;
