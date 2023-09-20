@@ -8,7 +8,7 @@
  *
  * Return: size of list
  *
- * Author: Frederick Baafi & Bryan Wellington Same
+ * Author: Frederick Baafi & Bryan Wellington Sam
  * Date: 09/2023
  */
 
@@ -21,11 +21,11 @@ list_t *attach_node(list_t **head, const char *str, int n)
 	new_head = malloc(sizeof(list_t));
 	if (!new_head)
 		return (NULL);
-	_memset((void *) new_head, 0, sizeof(list_t));
+	memory_config((void *) new_head, 0, sizeof(list_t));
 	new_head->n = n;
 	if (str)
 	{
-		new_head->str = _strdup(str);
+		new_head->str = _str_duplicate(str);
 		if (!new_head->str)
 		{
 			free(new_head);
@@ -57,11 +57,11 @@ list_t *attach_end_node(list_t **head, const char *str, int n)
 	new_node = malloc(sizeof(list_t));
 	if (!new_node)
 		return (NULL);
-	_memset((void *) new_node, 0, sizeof(list_t));
+	memory_config((void *) new_node, 0, sizeof(list_t));
 	new_node->n = n;
 	if (str)
 	{
-		new_node->str = _strdup(str);
+		new_node->str = _str_duplicate(str);
 		if (!new_node->str)
 		{
 			free(new_node);
