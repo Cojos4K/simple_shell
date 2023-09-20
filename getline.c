@@ -8,7 +8,7 @@
  *
  * Return: number of bytes
  *
- * Author: Frederick Baafi
+ * Authors: Frederick Baafi & Bryan Wellington Sam
  * Date: 09/2023
  */
 
@@ -39,7 +39,7 @@ ssize_t buffer_input(info_t *info, char **buf, size_t *len)
 
 			info->linecount_flag = 1;
 			remove_comments(*buf);
-			build_history_list(info, *buf, info->histcount++);
+			initiate_history(info, *buf, info->histcount++);
 
 			if (_str_loc(*buf, ';'))
 			{
@@ -77,11 +77,11 @@ ssize_t fetch_input(info_t *info)
 	{
 		id2 = id1;
 		n = buf + id1;
-		check_chain(info, buf, &id2, id1, len);
+		check_series(info, buf, &id2, id1, len);
 
 		while (id2 < len)
 		{
-			if (is_chain(info, buf, &id2))
+			if (_char_series(info, buf, &id2))
 				break;
 			id2++;
 		}

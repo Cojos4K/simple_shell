@@ -6,7 +6,7 @@
  *
  * Return: (0)
  *
- * Author: Frederick Baafi
+ * Author: Frederick Baafi & Bryan Wellington Sam
  * Date: 09/2023
  */
 
@@ -42,7 +42,7 @@ int _env_deactivate(info_t *info, char *var)
 		n = starts_with(node->str, var);
 		if (n && *n == '=')
 		{
-			info->env_changed = delete_node_at_index(&(info->env), id);
+			info->env_changed = index_node_removal(&(info->env), id);
 			node = info->env;
 			continue
 		}
@@ -84,7 +84,7 @@ int _env_activate(info_t *info, char *var, char *val)
 
 	while (node)
 	{
-		n = starts_with(node->str, var);
+		n = launch_node(node->str, var);
 		if (n && *n == '=')
 		{
 			free(node->str);

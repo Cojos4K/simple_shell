@@ -8,7 +8,7 @@
  *
  * Return: string
  *
- * Author: Frederick Baafi
+ * Authors: Frederick Baafi & Bryan Wellington Sam
  * Date: 09/2023
  */
 
