@@ -134,33 +134,33 @@ int _putfd(char c, int fd);
 int _putsfd(char *str, int fd);
 
 /* toem_string.c */
-int _strlen(char *);
-int _strcmp(char *, char *);
-char *starts_with(const char *, const char *);
-char *_strcat(char *, char *);
+int _str_len(char *str);
+int _str_cmp(char *str1, char *str2);
+char *initializer(const char *stack, const char *needle);
+char *_str_concat(char *dest, char *src);
 
 /* toem_string1.c */
-char *_strcpy(char *, char *);
-char *_strdup(const char *);
-void _puts(char *);
-int _putchar(char);
+char *_str_copy(char *dest, char *src);
+char *_str_duplicate(const char *str);
+void _puts(char *str);
+int _putchar(char c);
 
 /* toem_exits.c */
-char *_strncpy(char *, char *, int);
-char *_strncat(char *, char *, int);
-char *_strchr(char *, char);
+char *_str_copy(char *dest, char *src, int n);
+char *_str_concat(char *dest, char *src, int n);
+char *_str_loc(char *str, char c);
 
 /* toem_tokenizer.c */
-char **strtow(char *, char *);
-char **strtow2(char *, char);
+char **str_token(char *str, char *d);
+char **str_ntoken(char *str, char d);
 
 /* toem_realloc.c */
-char *_memset(char *, char, unsigned int);
-void ffree(char **);
-void *_realloc(void *, unsigned int, unsigned int);
+char *memory_config(char *s, char b, unsigned int n);
+void str_free(char **ps);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 /* toem_memory.c */
-int bfree(void **);
+int ptr_free(void **ptr);
 
 /* toem_atoi.c */
 int interactive(info_t *);
@@ -185,14 +185,16 @@ int _myhistory(info_t *);
 int _myalias(info_t *);
 
 /*toem_getline.c */
-ssize_t get_input(info_t *);
-int _getline(info_t *, char **, size_t *);
-void sigintHandler(int);
+ssize_t buffer_input(info_t *info, char **buf, size_t *len);
+ssize_t fetch_input(info_t *info);
+int _getline(info_t *info, char **ptr, size_t *length);
+ssize_t buffer_read(info_t *info, char *buf, size_t *s);
+void sigintHandler(int sig_num);
 
 /* toem_getinfo.c */
-void clear_info(info_t *);
-void set_info(info_t *, char **);
-void free_info(info_t *, int);
+void empty_info(info_t *info);
+void config_info(info_t *info, char **av);
+void _free_info(info_t *info, int total);
 
 /* toem_environ.c */
 char *_getenv(info_t *, const char *);
@@ -202,37 +204,37 @@ int _myunsetenv(info_t *);
 int populate_env_list(info_t *);
 
 /* toem_getenv.c */
-char **get_environ(info_t *);
-int _unsetenv(info_t *, char *);
-int _setenv(info_t *, char *, char *);
+char **_env_fetch(info_t *info);
+int _env_deactivate(info_t *info, char *var);
+int _env_activate(info_t *info, char *var, char *val);
 
 /* toem_history.c */
-char *get_history_file(info_t *info);
-int write_history(info_t *info);
+char *fetch_history_file(info_t *info);
+int record_history(info_t *info);
 int read_history(info_t *info);
-int build_history_list(info_t *info, char *buf, int linecount);
-int renumber_history(info_t *info);
+int initiate_history(info_t *info, char *buf, int linecount);
+int reindex_history(info_t *info);
 
 /* toem_lists.c */
-list_t *add_node(list_t **, const char *, int);
-list_t *add_node_end(list_t **, const char *, int);
-size_t print_list_str(const list_t *);
-int delete_node_at_index(list_t **, unsigned int);
-void free_list(list_t **);
+list_t *attach_node(list_t **head, const char *str, int n);
+list_t *attach_end_node(list_t **head, const char *str, int n);
+size_t strlog_display(const list_t *h);
+int index_node_removal(list_t **head, unsigned int index);
+void free_list(list_t **ptr);
 
 /* toem_lists1.c */
-size_t list_len(const list_t *);
-char **list_to_strings(list_t *);
-size_t print_list(const list_t *);
-list_t *node_starts_with(list_t *, char *, char);
-ssize_t get_node_index(list_t *, list_t *);
+size_t list_range(const list_t *h);
+char **list_to_strings(list_t *head);
+size_t list_display(const list_t *h);
+list_t *launch_node(list_t *node, char *prefix, char c);
+ssize_t fetch_node_index(list_t *head, list_t *node);
 
 /* toem_vars.c */
-int is_chain(info_t *, char *, size_t *);
-void check_chain(info_t *, char *, size_t *, size_t, size_t);
-int replace_alias(info_t *);
-int replace_vars(info_t *);
-int replace_string(char **, char *);
+int _char_series(info_t *info, char *buf, size_t *p);
+void check_series(info_t *info, char *buf, size_t *p, size_t i, size_t len);
+int alias_switch(info_t *info);
+int var_switch(info_t *info);
+int _str_switch(char **old, char *recent);
 
 #endif
 
