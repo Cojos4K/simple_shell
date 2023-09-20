@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _str_token - splits a string into words.
+ * _str_token - splits string into words
  * @str: the input string
  * @d: the delimeter string
  *
