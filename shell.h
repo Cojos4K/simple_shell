@@ -114,15 +114,15 @@ typedef struct builtin
 
 
 /* toem_shloop.c */
-int hsh(info_t *, char **);
-int find_builtin(info_t *);
-void find_cmd(info_t *);
-void fork_cmd(info_t *);
+int cfshell(info_t *info, char **av);
+int find_builtin(info_t *info);
+void cmd_pathfind(info_t *info);
+void cmd_fork(info_t *info);
 
 /* toem_parser.c */
-int is_cmd(info_t *, char *);
-char *dup_chars(char *, int, int);
-char *find_path(info_t *, char *, char *);
+int run_cmd(info_t *info, char *path);
+char *char_duplicate(char *str_path, int start, int stop);
+char *identify_path(info_t *info, char *str_path, char *cmd);
 
 /* loophsh.c */
 int loophsh(char **);
