@@ -34,13 +34,13 @@ void config_info(info_t *info, char **av)
 
 	if (info->arg)
 	{
-		info->argv = strtow(info->arg, "\t");
+		info->argv = _str_token(info->arg, "\t");
 		if (!info->argv)
 		{
 			info->argv = malloc(sizeof(char *) * 2);
 			if (info->argv)
 			{
-				info->argv[0] = _strdup(info->arg);
+				info->argv[0] = _str_duplicate(info->arg);
 				info->argv[1] = NULL;
 			}
 		}
@@ -48,8 +48,8 @@ void config_info(info_t *info, char **av)
 			;
 		info->argc = id;
 
-		replace_alias(info);
-		replace_vars(info);
+		alias_switch(info);
+		var_switch(info);
 	}
 }
 
@@ -63,7 +63,7 @@ void config_info(info_t *info, char **av)
 
 void _free_info(info_t *info, int total)
 {
-	ffree(info->argv);
+	str_free(info->argv);
 	info->argv = NULL;
 	info->path = NULL;
 	if (total)
@@ -76,9 +76,9 @@ void _free_info(info_t *info, int total)
 			free_list(&(info->history));
 		if (info->alias)
 			free_list(&(info->alias));
-		ffree(info->environ);
+		str_free(info->environ);
 		info->environ = NULL;
-		bfree((void **)info->cmd_buf);
+		ptr_free((void **)info->cmd_buf);
 		if (info->readfd > 2)
 			close(info->readfd);
 		_putchar(BUF_FLUSH);
