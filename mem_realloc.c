@@ -22,7 +22,7 @@ char *memory_config(char *s, char b, unsigned int n)
 }
 
 /**
- * str_free - frees ss string of strings
+ * str_free - frees the ss string of strings
  * @ps: string of strings
  */
 
