@@ -39,7 +39,7 @@ int _env_deactivate(info_t *info, char *var)
 
 	while (node)
 	{
-		n = starts_with(node->str, var);
+		n = launch_node(node->str, var);
 		if (n && *n == '=')
 		{
 			info->env_changed = index_node_removal(&(info->env), id);
@@ -71,7 +71,7 @@ int _env_activate(info_t *info, char *var, char *val)
 	if (!var || !val)
 		return (0);
 
-	buf = malloc(_strlen(var) + _strlen(val) + 2);
+	buf = malloc(_str_len(var) + _str_len(val) + 2);
 
 	if (!buf)
 		return (1);
@@ -94,7 +94,7 @@ int _env_activate(info_t *info, char *var, char *val)
 		}
 		node = node->next;
 	}
-	add_node_end(&(info->env), buf, 0);
+	attach_node_end(&(info->env), buf, 0);
 	free(buf);
 	info->env_changed = 1;
 	return (0);
