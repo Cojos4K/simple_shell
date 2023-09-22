@@ -1,18 +1,13 @@
 #include "shell.h"
 
 /**
- * memory_config - fills memory with ss constant byte
- * @s: the pointer to the memory area
- * @b: the byte to fill *s with
- * @n: the amount of bytes to be filled
- *
- * Return: (s) ss pointer to the memory area s
- *
- * Authors: Frederick Baafi & Bryan Wellington Sam
- * Date: 09/2023
+ **_memset - fills memory with a constant byte
+ *@s: the pointer to the memory area
+ *@b: the byte to fill *s with
+ *@n: the amount of bytes to be filled
+ *Return: (s) a pointer to the memory area s
  */
-
-char *memory_config(char *s, char b, unsigned int n)
+char *_memset(char *s, char b, unsigned int n)
 {
 	unsigned int i;
 
@@ -22,33 +17,31 @@ char *memory_config(char *s, char b, unsigned int n)
 }
 
 /**
- * str_free - frees the ss string of strings
- * @ps: string of strings
+ * ffree - frees a string of strings
+ * @pp: string of strings
  */
-
-void str_free(char **ps)
+void ffree(char **pp)
 {
-	char **ss = ps;
+	char **a = pp;
 
-	if (!ps)
+	if (!pp)
 		return;
-	while (*ps)
-		free(*ps++);
-	free(ss);
+	while (*pp)
+		free(*pp++);
+	free(a);
 }
 
 /**
- * _realloc - reallocates ss block of memory
- * @ptr: pointer to previous malloc block
+ * _realloc - reallocates a block of memory
+ * @ptr: pointer to previous malloc'ated block
  * @old_size: byte size of previous block
  * @new_size: byte size of new block
  *
- * Return: pointer to old block.
+ * Return: pointer to da ol'block nameen.
  */
-
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	char *p_loc;
+	char *p;
 
 	if (!ptr)
 		return (malloc(new_size));
@@ -56,12 +49,14 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 		return (free(ptr), NULL);
 	if (new_size == old_size)
 		return (ptr);
-	p_loc = malloc(new_size);
-	if (!p_loc)
+
+	p = malloc(new_size);
+	if (!p)
 		return (NULL);
+
 	old_size = old_size < new_size ? old_size : new_size;
 	while (old_size--)
-		p_loc[old_size] = ((char *) ptr)[old_size];
+		p[old_size] = ((char *)ptr)[old_size];
 	free(ptr);
-	return (p_loc);
+	return (p);
 }

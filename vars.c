@@ -1,17 +1,14 @@
 #include "shell.h"
 
 /**
- * _char_series - test if current char in buffer is a chain delimeter
- * @info: struct parameter
+ * is_chain - test if current char in buffer is a chain delimeter
+ * @info: the parameter struct
  * @buf: the char buffer
  * @p: address of current position in buf
  *
  * Return: 1 if chain delimeter, 0 otherwise
- *
- * Authors: Byran Wellington Sam & Frederick Baafi
  */
-
-int _char_series(info_t *info, char *buf, size_t *p)
+int is_chain(info_t *info, char *buf, size_t *p)
 {
 	size_t j = *p;
 
@@ -27,9 +24,9 @@ int _char_series(info_t *info, char *buf, size_t *p)
 		j++;
 		info->cmd_buf_type = CMD_AND;
 	}
-	else if (buf[j] == ';')
+	else if (buf[j] == ';') /* found end of this command */
 	{
-		buf[j] = 0;
+		buf[j] = 0; /* replace semicolon with null */
 		info->cmd_buf_type = CMD_CHAIN;
 	}
 	else
@@ -39,8 +36,8 @@ int _char_series(info_t *info, char *buf, size_t *p)
 }
 
 /**
- * check_series - checks we should continue chaining based on last status
- * @info: struct parameter
+ * check_chain - checks we should continue chaining based on last status
+ * @info: the parameter struct
  * @buf: the char buffer
  * @p: address of current position in buf
  * @i: starting position in buf
@@ -48,8 +45,7 @@ int _char_series(info_t *info, char *buf, size_t *p)
  *
  * Return: Void
  */
-
-void check_series(info_t *info, char *buf, size_t *p, size_t i, size_t len)
+void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 {
 	size_t j = *p;
 
@@ -61,7 +57,6 @@ void check_series(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 			j = len;
 		}
 	}
-
 	if (info->cmd_buf_type == CMD_OR)
 	{
 		if (!info->status)
@@ -75,44 +70,41 @@ void check_series(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 }
 
 /**
- * alias_switch - replaces an aliases in the tokenized string
- * @info: struct parameter
+ * replace_alias - replaces an aliases in the tokenized string
+ * @info: the parameter struct
  *
  * Return: 1 if replaced, 0 otherwise
  */
-
-int alias_switch(info_t *info)
+int replace_alias(info_t *info)
 {
 	int i;
-	char *p;
 	list_t *node;
+	char *p;
 
 	for (i = 0; i < 10; i++)
 	{
-		node = launch_node(info->alias, info->argv[0], '=');
+		node = node_starts_with(info->alias, info->argv[0], '=');
 		if (!node)
 			return (0);
 		free(info->argv[0]);
-		p = _str_loc(node->str, '=');
+		p = _strchr(node->str, '=');
 		if (!p)
 			return (0);
-		p = _str_duplicate(p + 1);
+		p = _strdup(p + 1);
 		if (!p)
 			return (0);
 		info->argv[0] = p;
 	}
-
 	return (1);
 }
 
 /**
- * var_switch - replaces variables in the tokenized string
- * @info: struct parameter
+ * replace_vars - replaces vars in the tokenized string
+ * @info: the parameter struct
  *
  * Return: 1 if replaced, 0 otherwise
  */
-
-int var_switch(info_t *info)
+int replace_vars(info_t *info)
 {
 	int i = 0;
 	list_t *node;
@@ -121,45 +113,42 @@ int var_switch(info_t *info)
 	{
 		if (info->argv[i][0] != '$' || !info->argv[i][1])
 			continue;
-		if (!_str_cmp(info->argv[i], "$?"))
+
+		if (!_strcmp(info->argv[i], "$?"))
 		{
-			_str_switch(&(info->argv[i]),
-				_str_duplicate(convert_number(info->status, 10, 0)));
+			replace_string(&(info->argv[i]),
+				_strdup(convert_number(info->status, 10, 0)));
 			continue;
 		}
-
-		if (!_str_cmp(info->argv[i], "$$"))
+		if (!_strcmp(info->argv[i], "$$"))
 		{
-			_str_switch(&(info->argv[i]),
+			replace_string(&(info->argv[i]),
 				_strdup(convert_number(getpid(), 10, 0)));
 			continue;
 		}
-
-		node = launch_node(info->env, &info->argv[i][1], '=');
+		node = node_starts_with(info->env, &info->argv[i][1], '=');
 		if (node)
 		{
-			_str_switch(&(info->argv[i]),
-				_str_duplicate(_strchr(node->str, '=') + 1));
+			replace_string(&(info->argv[i]),
+				_strdup(_strchr(node->str, '=') + 1));
 			continue;
 		}
+		replace_string(&info->argv[i], _strdup(""));
 
-		_str_switch(&info->argv[i], _strdup(""));
 	}
-
 	return (0);
 }
 
 /**
- * _str_switch - replaces string
+ * replace_string - replaces string
  * @old: address of old string
- * @recent: new string
+ * @new: new string
  *
  * Return: 1 if replaced, 0 otherwise
  */
-
-int _str_switch(char **old, char *recent)
+int replace_string(char **old, char *new)
 {
 	free(*old);
-	*old = recent;
+	*old = new;
 	return (1);
 }

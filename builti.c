@@ -1,15 +1,13 @@
 #include "shell.h"
 
 /**
- * Author: Bryan Wellington Sam & Frederick Baafi
- * Date: 09/2023
- * _historyme - Displays the history list, one command by line, preceded
+ * _myhistory - displays the history list, one command by line, preceded
  *              with line numbers, starting at 0.
  * @info: Structure containing potential arguments. Used to maintain
- * constant function prototype.
- * Return: Always 0
+ *        constant function prototype.
+ *  Return: Always 0
  */
-int _historyme(info_t *info)
+int _myhistory(info_t *info)
 {
 	print_list(info->history);
 	return (0);
@@ -73,7 +71,7 @@ int print_alias(list_t *node)
 	{
 		p = _strchr(node->str, '=');
 		for (a = node->str; a <= p; a++)
-		_putchar(*a);
+			_putchar(*a);
 		_putchar('\'');
 		_puts(p + 1);
 		_puts("'\n");
@@ -83,12 +81,12 @@ int print_alias(list_t *node)
 }
 
 /**
- * _aliasme - mimics the alias builtin (man alias)
+ * _myalias - mimics the alias builtin (man alias)
  * @info: Structure containing potential arguments. Used to maintain
- * constant function prototype.
+ *          constant function prototype.
  *  Return: Always 0
  */
-int _aliasme(info_t *info)
+int _myalias(info_t *info)
 {
 	int i = 0;
 	char *p = NULL;

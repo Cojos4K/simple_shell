@@ -1,12 +1,10 @@
 #include "shell.h"
 
 /**
- * _eputs - prints an input string
+ *_eputs - prints an input string
  * @str: the string to be printed
  *
  * Return: Nothing
- * Author: Bryan Wellington Sam & Frederick Baafi
- * Date: 09/2023
  */
 void _eputs(char *str)
 {
@@ -22,7 +20,7 @@ void _eputs(char *str)
 }
 
 /**
- * _eputchar - Writes the character c to stderr
+ * _eputchar - writes the character c to stderr
  * @c: The character to print
  *
  * Return: On success 1.
@@ -67,7 +65,7 @@ int _putfd(char c, int fd)
 }
 
 /**
- * _putsfd - prints an input string
+ *_putsfd - prints an input string
  * @str: the string to be printed
  * @fd: the filedescriptor to write to
  *

@@ -1,40 +1,34 @@
 #include "shell.h"
 
 /**
- * _str_copy - copies a string
+ * _strcpy - copies a string
  * @dest: the destination
  * @src: the source
  *
  * Return: pointer to destination
- *
- * Authors: Frederick Baafi & Bryan Wellington Sam
- * Date: 09/2023
  */
-
-char *_str_copy(char *dest, char *src)
+char *_strcpy(char *dest, char *src)
 {
-	int id = 0;
+	int i = 0;
 
 	if (dest == src || src == 0)
 		return (dest);
-	while (src[id])
+	while (src[i])
 	{
-		dest[id] = src[id];
-		id++;
+		dest[i] = src[i];
+		i++;
 	}
-
-	dest[id] = 0;
+	dest[i] = 0;
 	return (dest);
 }
 
 /**
- * _str_duplicate - duplicates a string
+ * _strdup - duplicates a string
  * @str: the string to duplicate
  *
  * Return: pointer to the duplicated string
  */
-
-char *_str_duplicate(const char *str)
+char *_strdup(const char *str)
 {
 	int length = 0;
 	char *ret;
@@ -52,22 +46,21 @@ char *_str_duplicate(const char *str)
 }
 
 /**
- * _puts - prints an input string
- * @str: the string to be printed
+ *_puts - prints an input string
+ *@str: the string to be printed
  *
  * Return: Nothing
  */
-
 void _puts(char *str)
 {
-	int id = 0;
+	int i = 0;
 
 	if (!str)
 		return;
-	while (str[id] != '\0')
+	while (str[i] != '\0')
 	{
-		_putchar(str[id]);
-		id++;
+		_putchar(str[i]);
+		i++;
 	}
 }
 
@@ -78,19 +71,17 @@ void _puts(char *str)
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-
 int _putchar(char c)
 {
-	static int id;
+	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || id >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(1, buf, id);
-		id = 0;
+		write(1, buf, i);
+		i = 0;
 	}
-
 	if (c != BUF_FLUSH)
-		buf[id++] = c;
+		buf[i++] = c;
 	return (1);
 }
